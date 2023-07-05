@@ -1,0 +1,86 @@
+<div class="cursor">
+  <div class="cursor-text cursor-text__product">View Product</div>
+</div>
+
+
+<style>
+  .cursor {
+    transition: all 200ms ease-out;
+    position: fixed;
+    pointer-events: none;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    transform: translate(calc(-50% + 15px), -50%);
+    display: block !important;
+    mix-blend-mode: difference;
+    width: 15px;
+    height: 15px;
+    background-color: #fff;
+    border-radius: 100vw;
+  }
+
+  .hover {
+    width: 25px;
+    height: 25px;
+  }
+
+  .cursor .cursor-text {
+    display: none;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 2rem;
+    position: absolute;
+    width: max-content;
+    top: 50%;
+    left: 100%;
+    transform: translate(10%, -50%);
+    line-height: 1;
+  }
+
+  .cursor.cursor__product-text .cursor-text.cursor-text__product {
+    display: block;
+  }
+</style>
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script> -->
+<script>
+  // UPDATE: I was able to get this working again... Enjoy!
+
+  let cursor = document.querySelector('.cursor');
+  let a = document.querySelectorAll('a');
+  let productCards = document.querySelectorAll('.product-card-wrapper');
+
+  document.addEventListener('mousemove', function (e) {
+    let x = e.clientX;
+    let y = e.clientY;
+    cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
+  });
+
+  document.addEventListener('mousedown', function () {
+    cursor.classList.add('click');
+  });
+
+  document.addEventListener('mouseup', function () {
+    cursor.classList.remove('click');
+  });
+
+  a.forEach(item => {
+    item.addEventListener('mouseover', () => {
+      cursor.classList.add('hover');
+    });
+    item.addEventListener('mouseleave', () => {
+      cursor.classList.remove('hover');
+    });
+  });
+
+  productCards.forEach(productCard => {
+    productCard.addEventListener('mouseover', () => {
+      cursor.classList.add('cursor__product-text');
+    });
+    productCard.addEventListener('mouseleave', () => {
+      cursor.classList.remove('cursor__product-text');
+    });
+  })
+</script>
